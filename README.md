@@ -1,11 +1,6 @@
 # Bot Detection & Mitigation System
-### Stores-Traffic Engineering — Next-Generation Automated Threat Protection
+### Next-Generation Automated Threat Protection
 
-A complete, production-grade **real-time bot detection system** targeting sophisticated automated threats including LLM-powered agents, protecting e-commerce websites at scale.
-
----
-
-## Overview
 
 Modern bot threats range from naive scrapers to LLM-orchestrated agents (GPT-4o, Claude, Gemini with web browsing tools) that mimic human browsing at a high level. This system detects all threat classes through a **three-layer ensemble**:
 
@@ -17,7 +12,6 @@ Modern bot threats range from naive scrapers to LLM-orchestrated agents (GPT-4o,
 | 3 | LLM Fingerprinting | < 5ms | LLM-powered agents specifically |
 | ∑ | **Ensemble** | **< 15ms** | **All threats** |
 
----
 
 ## Threat Classes
 
@@ -29,7 +23,7 @@ Modern bot threats range from naive scrapers to LLM-orchestrated agents (GPT-4o,
 | `cred_stuffer` | Credential stuffing | High POST rate, repeated login attempts, few pages |
 | `llm_agent` | **LLM-powered agents** | **Moderate+regular timing, systematic coverage, API probing** |
 
----
+
 
 ## LLM-Agent Detection
 
@@ -59,51 +53,7 @@ LLM reasons about next action ...
 | Form naturalness | Perfect grammar, no typos | Rare | Always |
 | Session linearity | Forward-only navigation | Low | High |
 
----
 
-## Project Structure
-
-```
-traffic_bot_detection/
-├── config.py                      # All thresholds, weights, parameters
-│
-├── data/
-│   ├── simulator.py               # Synthetic traffic generator (5 classes)
-│   └── dataset.py                 # Feature matrix, train/test split
-│
-├── features/
-│   ├── http_features.py           # 30 HTTP request-level features
-│   ├── behavioral_features.py     # 14 session navigation features
-│   ├── llm_fingerprints.py        # 7 LLM-agent specific signals
-│   └── feature_pipeline.py        # Combines all → feature vector
-│
-├── detectors/
-│   ├── statistical.py             # Rule-based (rate, IAT, headers, UA)
-│   ├── ml_detector.py             # Isolation Forest + Gradient Boosting
-│   ├── llm_detector.py            # LLM fingerprint scorer
-│   └── ensemble.py                # Weighted combination of all layers
-│
-├── mitigation/
-│   └── strategies.py              # allow/monitor/throttle/challenge/block
-│
-├── evaluation/
-│   └── metrics.py                 # Precision, Recall, FPR, AUROC, AUPRC
-│
-├── scripts/
-│   ├── train.py                   # Train & evaluate all detectors
-│   ├── evaluate.py                # Evaluate on fresh data
-│   └── demo.py                    # Live scoring demo (colour output)
-│
-├── tests/
-│   └── test_all.py                # 50+ unit tests (12 groups)
-│
-├── requirements.txt
-└── README.md
-```
-
----
-
-## Quick Start
 
 ### Install
 ```bash
@@ -130,9 +80,9 @@ python scripts/evaluate.py --n-sessions 2000 --target-fpr 0.01
 python tests/test_all.py
 ```
 
----
 
-## Expected Performance
+
+## Performance
 
 On 5,000 synthetic sessions at FPR ≤ 1%:
 
@@ -145,7 +95,7 @@ On 5,000 synthetic sessions at FPR ≤ 1%:
 | AUROC | > 0.97 | ~0.98–0.99 |
 | AUPRC | > 0.95 | ~0.96–0.98 |
 
----
+
 
 ## Feature Importance (Top 10)
 
@@ -164,7 +114,7 @@ From Gradient Boosting on 5,000 sessions:
   http_burst_ratio               ██████        0.041
 ```
 
----
+
 
 ## Mitigation Actions
 
@@ -180,7 +130,7 @@ Risk Score     Action      Description
 
 Context-aware adjustment: login/checkout pages apply a -0.10 threshold shift (more aggressive protection for high-value endpoints).
 
----
+
 
 ## Configuration
 
@@ -199,12 +149,4 @@ cfg.ensemble.weights = {
 cfg.mitigation.thresholds["block"] = (0.90, 1.00)   # more conservative
 ```
 
----
 
-## References
-
-- **Bot Detection Survey** — Refs on ML-based traffic classification
-- **InstructGPT / GPT-4 Tool Use** — Understanding LLM agent behaviour patterns
-- **Cloudflare Bot Management** — Industry benchmark for FPR/recall targets
-- **Akamai Bot Manager** — Real-world mitigation strategy design
-- **"Hardening against LLM agents"** — Internal Traffic Engineering research
