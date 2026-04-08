@@ -202,7 +202,7 @@ From Gradient Boosting trained on 5,000 sessions:
 <br/>
 
 
-## 🚦 Mitigation Actions
+## 🛠️ Mitigation Actions
 
 Risk scores are mapped to five progressive response tiers:
 
